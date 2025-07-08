@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS VR | Immersive Reality Redefined</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6e45e2;
+            --secondary: #88d3ce;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --accent: #ff6b6b;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        /* Improved Navbar with Mobile Menu */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            z-index: 100;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+        }
+        
+        .navbar.scrolled {
+            padding: 1rem 5%;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            font-size: clamp(1.5rem, 4vw, 1.8rem);
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            z-index: 101;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 101;
+        }
+        
+        .cta-button {
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(110, 69, 226, 0.4);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            white-space: nowrap;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(110, 69, 226, 0.6);
+        }
+        
+        /* Hero Section with Mobile Optimization */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 7rem 5% 3rem;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        
+        .hero-content {
+            width: 100%;
+            max-width: 800px;
+            z-index: 2;
+            margin-bottom: 2rem;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, var(--light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 100%;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        
+        .hero-buttons button {
+            flex: 1 1 auto;
+            min-width: 200px;
+        }
+        
+        .secondary-button {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .vr-model {
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+            margin: 2rem auto 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .vr-model-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .vr-model-placeholder {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(110, 69, 226, 0.2) 0%, rgba(136, 211, 206, 0.1) 70%, transparent 100%);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vr-model-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 650px;
+            height: 650px;
+            background: url('images/1.jpg') center/contain no-repeat;
+            filter: drop-shadow(0 0 30px rgba(110, 69, 226, 0.6));
+        }
+        
+        /* Features Section with Grid Layout */
+        .features {
+            padding: 4rem 5%;
+            background: linear-gradient(to bottom, var(--dark), #0f0f1a);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 100%;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            margin-bottom: 1.2rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .feature-card h3 {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        /* Specs Section with Flex Direction Change */
+        .specs {
+            padding: 4rem 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .specs::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('images/2.jpg') center/cover;
+            opacity: 0.05;
+            z-index: -1;
+        }
+        
+        .specs-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .specs-image {
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            order: 1;
+        }
+        
+        .specs-image img {
+            width: 100%;
+            filter: drop-shadow(0 0 20px rgba(110, 69, 226, 0.4));
+        }
+        
+        .specs-content {
+            width: 100%;
+            order: 2;
+        }
+        
+        .specs-list {
+            margin-top: 1.5rem;
+        }
+        
+        .spec-item {
+            margin-bottom: 1.2rem;
+            padding-bottom: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .spec-item h4 {
+            font-size: clamp(1.1rem, 3vw, 1.2rem);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .spec-item p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: clamp(0.9rem, 2vw, 1rem);
+        }
+        
+        /* CTA Section with Responsive Padding */
+        .cta-section {
+            padding: 4rem 5%;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-section h2 {
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1.2rem;
+            line-height: 1.2;
+        }
+        
+        .cta-section p {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .cta-bg-element {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .cta-bg-element:nth-child(1) {
+            top: -50px;
+            left: -50px;
+        }
+        
+        .cta-bg-element:nth-child(2) {
+            bottom: -80px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+        }
+        
+        /* Footer with Stacked Layout on Mobile */
+        footer {
+            padding: 2.5rem 5%;
+            background: #0f0f1a;
+            text-align: center;
+        }
+        
+        .footer-logo {
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+            font-weight: 700;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-links a {
+            color: var(--light);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+        }
+        
+        /* Mobile Menu Styles */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--dark);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateY(-100%);
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .mobile-menu .nav-links {
+            flex-direction: column;
+            gap: 2rem;
+            text-align: center;
+        }
+        
+        .mobile-menu .nav-links a {
+            font-size: 1.5rem;
+        }
+        
+        .close-menu-btn {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        /* Media Queries for Fine-Tuning */
+        @media (min-width: 768px) {
+            .hero {
+                flex-direction: row;
+                text-align: left;
+                justify-content: space-between;
+                align-items: center;
+                padding-top: 5rem;
+            }
+            
+            .hero-content {
+                width: 50%;
+                max-width: none;
+                text-align: left;
+                margin-bottom: 0;
+            }
+            
+            .hero h1, .hero p {
+                text-align: left;
+            }
+            
+            .hero-buttons {
+                justify-content: flex-start;
+            }
+            
+            .vr-model {
+                width: 45%;
+                height: 60vh;
+                margin: 0;
+            }
+            
+            .specs-container {
+                flex-direction: row;
+            }
+            
+            .specs-image {
+                order: 2;
+            }
+            
+            .specs-content {
+                order: 1;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .mobile-menu-btn {
+                display: none;
+            }
+            
+            .nav-links {
+                display: flex;
+            }
+            
+            .hero-content {
+                width: 45%;
+            }
+            
+            .vr-model {
+                width: 50%;
+            }
+        }
+        
+        @media (max-width: 991px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links:not(.mobile-menu .nav-links) {
+                display: none;
+            }
+        }
+        
+        /* Performance Optimizations */
+        @media (prefers-reduced-motion) {
+            * {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">NEXUS VR</div>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Features</a>
+            <a href="#">Specs</a>
+            <a href="#">Gallery</a>
+            <a href="#">Support</a>
+            <button class="cta-button">Pre-order Now</button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu-btn" id="closeMenuBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Features</a>
+            <a href="#">Specs</a>
+            <a href="#">Gallery</a>
+            <a href="#">Support</a>
+            <button class="cta-button">Pre-order Now</button>
+        </div>
+    </div>
+    
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Step Into The Future Of Reality</h1>
+            <p>Experience unparalleled immersion with our cutting-edge VR headset. Crystal-clear visuals, ultra-low latency, and complete freedom of movement redefine what's possible in virtual reality.</p>
+            <div class="hero-buttons">
+                <button class="cta-button">Buy Now $599</button>
+                <button class="secondary-button">Explore Features</button>
+            </div>
+        </div>
+        <div class="vr-model">
+            <div class="vr-model-container">
+                <div class="vr-model-placeholder"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <h2 class="section-title">Next Generation VR Experience</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>4K Micro-OLED Displays</h3>
+                <p>Dual 4K displays with 120Hz refresh rate deliver stunning clarity and smoothness that eliminates screen door effect.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-expand"></i>
+                </div>
+                <h3>220° Field of View</h3>
+                <p>Ultra-wide field of view creates true peripheral vision for complete immersion in your virtual world.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Wireless Freedom</h3>
+                <p>Advanced 60GHz wireless technology delivers uncompressed video with less than 5ms latency.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-hand-paper"></i>
+                </div>
+                <h3>Precision Tracking</h3>
+                <p>Inside-out tracking with 32 sensors captures every movement with millimeter accuracy.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Neural Interface</h3>
+                <p>Optional neural sensors detect facial expressions and eye movements for next-level social VR.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-weight-hanging"></i>
+                </div>
+                <h3>Lightweight Design</h3>
+                <p>At just 380g, our ergonomic design distributes weight evenly for comfortable extended use.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="specs">
+        <div class="specs-container">
+            <div class="specs-image">
+                <img src="images/3.jpg" alt="NEXUS VR Headset">
+            </div>
+            <div class="specs-content">
+                <h2 class="section-title">Technical Specifications</h2>
+                <div class="specs-list">
+                    <div class="spec-item">
+                        <h4><i class="fas fa-tv"></i> Displays</h4>
+                        <p>Dual 4K Micro-OLED, 120Hz refresh rate, HDR10, 1000 nits peak brightness</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-microchip"></i> Processor</h4>
+                        <p>Custom XR2+ chip with dedicated AI co-processor and 12GB RAM</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-arrows-alt"></i> Field of View</h4>
+                        <p>220° horizontal, 135° vertical (human eye equivalent)</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-wifi"></i> Connectivity</h4>
+                        <p>Wi-Fi 6E, Bluetooth 5.2, 60GHz wireless module</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-clock"></i> Battery Life</h4>
+                        <p>3-5 hours continuous use, fast charging (50% in 15 minutes)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <div class="cta-bg-element"></div>
+        <div class="cta-bg-element"></div>
+        <h2>Ready to Redefine Your Reality?</h2>
+        <p>Join thousands of early adopters who are already experiencing the future of virtual reality with NEXUS VR.</p>
+        <button class="cta-button">Order Now - Limited Stock</button>
+    </section>
+    
+    <footer>
+        <div class="footer-logo">NEXUS VR</div>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Careers</a>
+            <a href="#">Press</a>
+            <a href="#">Developers</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
+        <div class="social-links">
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+            <a href="#"><i class="fab fa-discord"></i></a>
+        </div>
+        <div class="copyright">© 2023 NEXUS VR Technologies. All rights reserved.</div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Close menu when clicking on a link
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Performance optimization - load critical elements first
+        document.addEventListener('DOMContentLoaded', function() {
+            // Lazy load non-critical elements
+            const lazyElements = [].slice.call(document.querySelectorAll('.lazy'));
+            
+            if ('IntersectionObserver' in window) {
+                let lazyObserver = new IntersectionObserver(function(entries, observer) {
+                    entries.forEach(function(entry) {
+                        if (entry.isIntersecting) {
+                            let lazyElement = entry.target;
+                            // Load your lazy content here
+                            lazyObserver.unobserve(lazyElement);
+                        }
+                    });
+                });
+                
+                lazyElements.forEach(function(lazyElement) {
+                    lazyObserver.observe(lazyElement);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
