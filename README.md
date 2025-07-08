@@ -1,0 +1,3 @@
+Nexus Headset – UI/UX Product Landing Page
+Designed in Figma | Developed with HTML, CSS, SCSS & JavaScript
+Nexus Headset is a modern, responsive product landing page focused on showcasing a premium audio device with clean UI and engaging UX. The design was originally created in Figma, emphasizing minimalism, smooth user flow, and product-focused visuals. I then brought the design to life using semantic HTML, custom SCSS for scalable styling, and vanilla JavaScript to add interactive elements like animations and transitions. The page is fully responsive, ensuring a seamless experience across desktop, tablet, and mobile devices. This project reflects my ability to convert high-fidelity UI/UX designs into functional, pixel-perfect websites.
